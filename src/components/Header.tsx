@@ -1,32 +1,36 @@
-import { Search, Bell } from 'lucide-react';
+import { ChevronDown, ChevronLeft } from 'lucide-react';
 
-export const Header = ({ title }: { title: string }) => {
+interface HeaderProps {
+  title: string;
+  onBack?: () => void;
+}
+
+export const Header = ({ title, onBack }: HeaderProps) => {
+  const formatTitle = (text: string) => {
+    return text.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
+
   return (
-    <header className="h-20 bg-white px-8 flex items-center justify-between border-b border-slate-50 sticky top-0 z-10">
-      <div className="flex-1 max-w-2xl">
-        <div className="relative">
-          <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input 
-            type="text" 
-            placeholder="Search anything..." 
-            className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
-          />
-        </div>
+    <header className="h-16 bg-white px-8 flex items-center justify-between border-b border-slate-200 sticky top-0 z-40">
+      <div className="flex items-center gap-4">
+        {onBack && (
+          <button 
+            onClick={onBack}
+            className="p-2 hover:bg-slate-100 rounded-xl transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5 text-slate-600" />
+          </button>
+        )}
+        <h1 className="text-2xl font-bold text-[#337ab7]">{formatTitle(title)}</h1>
       </div>
       
-      <div className="flex items-center gap-6">
-        <button className="p-2 text-slate-400 hover:bg-slate-50 rounded-full transition-colors">
-          <Bell className="w-5 h-5" />
-        </button>
-        
-        <div className="flex items-center gap-3">
-          <div className="text-right">
-            <p className="text-sm font-bold text-slate-900">Arun Kumar</p>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">HR Director</p>
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 cursor-pointer group">
+          <div className="w-8 h-8 bg-[#337ab7] rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+            MN
           </div>
-          <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-            AK
-          </div>
+          <p className="text-xs font-bold text-[#337ab7] group-hover:text-[#286090] transition-colors">Manoj Nikam</p>
+          <ChevronDown className="w-3 h-3 text-[#337ab7] group-hover:text-[#286090] transition-colors" />
         </div>
       </div>
     </header>
